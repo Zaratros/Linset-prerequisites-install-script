@@ -50,5 +50,8 @@ rm mdk3-v6.patch
 echo "[*]Installing MDK3."
 make && make install
 echo "[+]Everything should be installed and fine."
+echo "[*]Cleaning up that mess I made."
+cd ../.. && rm -rf prerequs
+echo "[+]Cleaned up my mess."
 echo "[+]You should be ready to go."
 echo "[#]Have a nice Day :) ."

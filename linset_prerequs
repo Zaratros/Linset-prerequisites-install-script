@@ -1,0 +1,54 @@
+#!/bin/bash
+if [ "$EUID" -ne 0 ]
+  then echo "[!]Please run this script as root."
+  exit
+fi
+echo "[*]Installing needed Stuff."
+echo ">>libnl"
+echo ">>libssh-dev"
+echo ">>tar"
+echo ">>unzip"
+echo ">>patch"
+echo ">>wget"
+echo ">>curl"
+echo ">>macchanger"
+echo ">>php5"
+echo ">>php5-cgi"
+echo ">>pyrit"
+echo ">>xterm"
+echo ">>nmap"
+apt-get install nmap xterm pyrit macchanger php5 php5-cgi curl wget libnl libssh-dev tar unzip patch -y
+echo "[+]Done installing needed Stuff."
+echo "[*]Going to Temp and creating the Folder 'prerequs'."
+cd /temp && mkdir prerequs && cd prerequs
+echo "[+]Done creating Temp Folder."
+echo "[*]Downloading and unpacking Aircrack-ng Suite."
+wget http://download.aircrack-ng.org/aircrack-ng-1.2-rc2.tar.gz
+tar xf aircrack-ng-1.2-rc2.tar.gz
+rm aircrack-ng-1.2-rc2.tar.gz
+cd aircrack-ng-1.2-rc2
+echo "[*]Making and Installing Aircrack-ng Suite."
+make && make install
+echo "[+]Done making and installing Aircrack-ng Suite."
+echo "[*]Updating Airodump-ng OUI File."
+echo "[*]This may gonna take a bit."
+airodump-ng-oui-update
+echo "[+]Done Updating Airodump-ng OUI File."
+echo "[*]Going to install hostapd and isc-dhcp-server."
+apt-get install isc-dhcp-server hostapd
+echo "[+]Done installing hostapd and isc-dhcp-server."
+echo "[*]Going to install Lighttpd."
+apt-get install lighttpd
+echo "[+]Done installing Lighttpd."
+echo "[*]Downloading MDK3 and the makefile patch."
+cd .. 
+wget http://linux.gungoos.com/mdk3-v6.tar.gz
+tar xf mdk3-v6.tar.gz && rm mdk3-v6.tar.gz && cd mdk3-v6
+wget http://linux.gungoos.com/mdk3-v6.patch
+patch Makefile < mdk3-v6.patch
+rm mdk3-v6.patch
+echo "[*]Installing MDK3."
+make && make install
+echo "[+]Everything should be installed and fine."
+echo "[+]You should be ready to go."
+echo "[#]Have a nice Day :) ."
